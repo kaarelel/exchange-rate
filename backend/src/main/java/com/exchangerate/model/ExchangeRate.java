@@ -14,13 +14,9 @@ public class ExchangeRate {
     private String currencyCode;
     private double rate;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) { this.date = date; }
 
-    public String getCurrencyCode() { return currencyCode; }
     public void setCurrencyCode(String currencyCode) { this.currencyCode = currencyCode; }
 
     public double getRate() { return rate; }
