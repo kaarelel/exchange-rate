@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8081:8080"
+    volumes:
+      - h2data:/data
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  h2data:

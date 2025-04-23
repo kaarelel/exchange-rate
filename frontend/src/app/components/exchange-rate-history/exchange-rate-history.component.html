@@ -1,0 +1,22 @@
+<div>
+  <h2>Exchange Rate History</h2>
+
+  <label for="currency-history-select">
+    Currency:
+    <select id="currency-history-select"
+            data-testid="currency-select"
+            [(ngModel)]="currency"
+            (change)="onCurrencyChange()">
+      <option *ngFor="let c of currencyList" [value]="c">{{ c }}</option>
+    </select>
+  </label>
+
+  <div style="height: 400px">
+    <canvas
+      baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [type]="'line'"
+    ></canvas>
+  </div>
+</div>

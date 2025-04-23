@@ -1,0 +1,28 @@
+<div>
+  <label for="amount">Amount:</label>
+  <input id="amount"
+         type="number"
+         [(ngModel)]="amount"
+         placeholder="Enter amount"
+         (focus)="clearAmountIfZero()" />
+  <label for="from">From Currency:</label>
+  <select id="from" [(ngModel)]="fromCurrency" data-testid="from-currency">
+    <option *ngFor="let curr of currencies" [value]="curr">{{ curr }}</option>
+  </select>
+
+  <label for="to">To Currency:</label>
+  <select id="to" [(ngModel)]="toCurrency" data-testid="to-currency">
+    <option *ngFor="let curr of currencies" [value]="curr">{{ curr }}</option>
+  </select>
+
+  <button (click)="convert()">Convert</button>
+
+  <div *ngIf="result">
+    <p><strong>Rate:</strong> 1 {{ fromCurrency }} → {{ toCurrency }} = <strong>{{ result.rate }}</strong></p>
+    <p><strong>Converted:</strong> <strong>{{ result.converted | number:'1.2-2' }}</strong></p>
+  </div>
+
+  <div *ngIf="error">
+    <p style="color: red;">{{ error }}</p>
+  </div>
+</div>
