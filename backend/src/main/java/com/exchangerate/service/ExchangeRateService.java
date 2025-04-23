@@ -5,14 +5,15 @@ import com.exchangerate.repository.ExchangeRateRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class ExchangeRateService {
+    private static final Logger logger = LoggerFactory.getLogger(ExchangeRateService.class);
     private final ExchangeRateRepository repository;
     private final ECBClient ecbClient;
 
@@ -35,15 +36,22 @@ public class ExchangeRateService {
 
     public void loadHistoricalRates() throws Exception {
         var rates = ecbClient.fetchRates();
+        int inserted = 0;
+
         for (var entry : rates.entrySet()) {
             for (var currency : entry.getValue().entrySet()) {
-                ExchangeRate rate = new ExchangeRate();
-                rate.setCurrencyCode(currency.getKey());
-                rate.setRate(currency.getValue());
-                rate.setDate(entry.getKey());
-                repository.save(rate);
+                if (repository.findByCurrencyCodeAndDate(currency.getKey(), entry.getKey()).isEmpty()) {
+                    ExchangeRate rate = new ExchangeRate();
+                    rate.setCurrencyCode(currency.getKey());
+                    rate.setRate(currency.getValue());
+                    rate.setDate(entry.getKey());
+                    repository.save(rate);
+                    inserted++;
+                }
             }
         }
+
+        logger.info("Inserted {} new exchange rate entries.", inserted);
     }
 
     public double getLatestRate(String from, String to) {
