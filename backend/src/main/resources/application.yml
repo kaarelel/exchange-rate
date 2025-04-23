@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: jdbc:h2:mem:exchange
-    driverClassName: org.h2.Driver
+    driver-class-name: org.h2.Driver
     username: sa
     password:
   h2:
@@ -10,16 +10,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
     properties:
       hibernate:
-        format_sql: true
   sql:
     init:
       mode: always
+
 server:
   port: 8080
+
 logging:
   level:
-    root: info
-    org.springframework: info
+    org.hibernate.SQL: WARN

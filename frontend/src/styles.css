@@ -1,0 +1,49 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 20px;
+  background: #f7f9fc;
+  color: #333;
+}
+
+label, select, input, button {
+  margin: 10px 5px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+input[type="number"]:focus {
+  outline: none;
+}
+
+input[type="number"]:not(:focus):placeholder-shown {
+  color: #ccc;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button {
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1565c0;
+}
+
+strong {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+select {
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
