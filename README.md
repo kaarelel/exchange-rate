@@ -25,6 +25,8 @@ Used tech
 
 Download the project and run in terminal 
 
-**docker-compose up**
+**docker-compose up --build**
 
-Open on **http://localhost:4200/**
+**Frontend: http://localhost:4200**
+
+**Backend: http://localhost:8080**
