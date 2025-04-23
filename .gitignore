@@ -1,0 +1,45 @@
+# === Node (frontend) ===
+node_modules/
+dist/
+.angular/
+build/
+
+# === Angular IDE ===
+.vscode/
+.idea/
+*.log
+
+# === Java (backend) ===
+*.class
+*.jar
+*.war
+*.ear
+target/
+*.iml
+*.ipr
+*.iws
+
+# === OS Specific ===
+.DS_Store
+Thumbs.db
+
+# === Environment config ===
+.env
+*.env
+
+# === IntelliJ/VSCode/IDE ===
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignore Node and Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.env
+
+# Ignore Java build
+backend/target/
+backend/.idea/
+backend/.vscode/
