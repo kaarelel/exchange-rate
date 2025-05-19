@@ -1,14 +1,15 @@
 package com.exchangerate.controller;
 
 import com.exchangerate.repository.ExchangeRateRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
-@RequestMapping("/api/status")
+@RequestMapping("${api.status-path:/status}")
 public class ExchangeStatusController {
+
     private final ExchangeRateRepository repo;
 
     public ExchangeStatusController(ExchangeRateRepository repo) {
@@ -16,10 +17,16 @@ public class ExchangeStatusController {
     }
 
     @GetMapping
-    public Map<String, Object> status() {
-        return Map.of(
-                "latestDate", Objects.requireNonNull(repo.findMaxDate().orElse(null)),
-                "totalRates", repo.count()
+    public ResponseEntity<Map<String, Object>> status() {
+        var latestDate = repo.findMaxDate().orElse(null);
+        if (latestDate == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(
+                Map.of(
+                        "latestDate", latestDate,
+                        "totalRates", repo.count()
+                )
         );
     }
 }

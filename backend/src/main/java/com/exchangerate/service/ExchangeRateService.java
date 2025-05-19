@@ -3,16 +3,16 @@ package com.exchangerate.service;
 import com.exchangerate.model.ExchangeRate;
 import com.exchangerate.repository.ExchangeRateRepository;
 import jakarta.annotation.PostConstruct;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
 public class ExchangeRateService {
+
     private static final Logger logger = LoggerFactory.getLogger(ExchangeRateService.class);
     private final ExchangeRateRepository repository;
     private final ECBClient ecbClient;
@@ -29,7 +29,7 @@ public class ExchangeRateService {
         }
     }
 
-    @Scheduled(cron = "0 1 0 * * ?")
+    @Scheduled(cron = "${scheduling.currency-update-cron:0 1 0 * * ?}")
     public void fetchTodayRates() throws Exception {
         loadHistoricalRates();
     }

@@ -16,7 +16,7 @@ public class ExchangeRateScheduler {
         this.exchangeRateService = exchangeRateService;
     }
 
-    @Scheduled(cron = "0 1 0 * * ?")
+    @Scheduled(cron = "${scheduling.currency-update-cron:0 1 0 * * ?}")
     public void fetchDailyRates() {
         try {
             logger.info("Running scheduled exchange rate fetch...");

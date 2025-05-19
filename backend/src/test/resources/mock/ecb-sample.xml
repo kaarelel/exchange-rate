@@ -1,0 +1,9 @@
+<gesmes:Envelope xmlns:gesmes="http://www.gesmes.org/xml/2002-08-01"
+                 xmlns="http://www.ecb.int/vocabulary/2002-08-01/eurofxref">
+    <Cube>
+        <Cube time="2024-05-15">
+            <Cube currency="USD" rate="1.0854"/>
+            <Cube currency="GBP" rate="0.85703"/>
+        </Cube>
+    </Cube>
+</gesmes:Envelope>
