@@ -8,6 +8,6 @@ export class CurrencyService {
   private http = inject(HttpClient);
 
   getCurrencyList(): Observable<string[]> {
-    return this.http.get<string[]>(`${environment.apiUrl}/api/rates`);
+    return this.http.get<string[]>(`${environment.apiUrl}/rates`);
   }
 }

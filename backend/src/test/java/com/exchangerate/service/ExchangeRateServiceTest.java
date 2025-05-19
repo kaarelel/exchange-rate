@@ -4,6 +4,7 @@ import com.exchangerate.model.ExchangeRate;
 import com.exchangerate.repository.ExchangeRateRepository;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -22,12 +23,12 @@ class ExchangeRateServiceTest {
 
         ExchangeRate eurRate = new ExchangeRate();
         eurRate.setCurrencyCode("EUR");
-        eurRate.setRate(1.0);
+        eurRate.setRate(new BigDecimal("1.0"));
         eurRate.setDate(date);
 
         ExchangeRate usdRate = new ExchangeRate();
         usdRate.setCurrencyCode("USD");
-        usdRate.setRate(1.2);
+        usdRate.setRate(new BigDecimal("1.2"));
         usdRate.setDate(date);
 
         when(repository.findFirstByCurrencyCodeOrderByDateDesc("EUR"))
@@ -37,8 +38,8 @@ class ExchangeRateServiceTest {
         when(repository.findByCurrencyCodeAndDate("USD", date))
                 .thenReturn(Optional.of(usdRate));
 
-        double rate = service.getLatestRate("EUR", "USD");
-        assertEquals(1.2, rate);
+        BigDecimal rate = service.getLatestRate("EUR", "USD");
+        assertEquals(new BigDecimal("1.2"), rate.setScale(1, BigDecimal.ROUND_HALF_UP));
     }
 
     @Test
@@ -47,19 +48,19 @@ class ExchangeRateServiceTest {
 
         ExchangeRate eur = new ExchangeRate();
         eur.setCurrencyCode("EUR");
-        eur.setRate(1.0);
+        eur.setRate(new BigDecimal("1.0"));
         eur.setDate(date);
 
         ExchangeRate usd = new ExchangeRate();
         usd.setCurrencyCode("USD");
-        usd.setRate(1.5);
+        usd.setRate(new BigDecimal("1.5"));
         usd.setDate(date);
 
         when(repository.findFirstByCurrencyCodeOrderByDateDesc("EUR")).thenReturn(Optional.of(eur));
         when(repository.findByCurrencyCodeAndDate("EUR", date)).thenReturn(Optional.of(eur));
         when(repository.findByCurrencyCodeAndDate("USD", date)).thenReturn(Optional.of(usd));
 
-        double result = service.convertCurrency(100, "EUR", "USD");
-        assertEquals(150.0, result);
+        BigDecimal result = service.convertCurrency(new BigDecimal("100"), "EUR", "USD");
+        assertEquals(new BigDecimal("150.0"), result.setScale(1, BigDecimal.ROUND_HALF_UP));
     }
 }

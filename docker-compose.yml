@@ -3,7 +3,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "8081:8080"
+      - "8080:8080"
     volumes:
       - h2data:/data
     environment:

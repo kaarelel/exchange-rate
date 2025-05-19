@@ -1,15 +1,15 @@
 package com.exchangerate.controller;
 
+import com.exchangerate.dto.AvailableCurrenciesResponse;
 import com.exchangerate.repository.ExchangeRateRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("${api.base-path:/api}")
 public class RateController {
 
     private final ExchangeRateRepository repository;
@@ -18,9 +18,10 @@ public class RateController {
         this.repository = repository;
     }
 
-    @GetMapping("/rates")
-    public ResponseEntity<List<String>> getAvailableCurrencies() {
+    @Cacheable("availableCurrencies")
+    @GetMapping("${api.rates-path:/rates}")
+    public ResponseEntity<Object> getAvailableCurrencies() {
         List<String> currencies = repository.findDistinctCurrencyCodes();
-        return ResponseEntity.ok(currencies);
+        return ResponseEntity.ok(new AvailableCurrenciesResponse(currencies));
     }
 }

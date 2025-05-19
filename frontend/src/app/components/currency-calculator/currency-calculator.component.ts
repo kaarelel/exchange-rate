@@ -17,7 +17,7 @@ export class CurrencyCalculatorComponent implements OnInit {
   fromCurrency = '';
   toCurrency = '';
   currencies: string[] = [];
-  result: { rate: number; converted: number } | null = null;
+  result: { rate: number; converted: number; from: string } | null = null;
   error: string | null = null;
 
   private http = inject(HttpClient);
@@ -46,7 +46,7 @@ export class CurrencyCalculatorComponent implements OnInit {
       return;
     }
 
-    this.http.get<any>(`${environment.apiUrl}/api/calc`, {
+    this.http.get<any>(`${environment.apiUrl}/calc`, {
       params: {
         amount: this.amount,
         from: this.fromCurrency,

@@ -59,7 +59,7 @@ export class ExchangeRateHistoryComponent implements OnInit {
   }
 
   loadChartData(): void {
-    this.http.get<{ date: string; rate: number }[]>(`${environment.apiUrl}/api/history/${this.currency}`).subscribe({
+    this.http.get<{ date: string; rate: number }[]>(`${environment.apiUrl}/history/${this.currency}`).subscribe({
       next: (data) => {
         this.lineChartData = {
           labels: data.map(d => d.date),

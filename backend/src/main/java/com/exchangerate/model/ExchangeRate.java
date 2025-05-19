@@ -1,6 +1,7 @@
 package com.exchangerate.model;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -11,14 +12,21 @@ public class ExchangeRate {
     private Long id;
 
     private LocalDate date;
+
     private String currencyCode;
-    private double rate;
+
+    @Column(precision = 19, scale = 8, nullable = false)
+    private BigDecimal rate;
 
     public LocalDate getDate() { return date; }
+
     public void setDate(LocalDate date) { this.date = date; }
 
     public void setCurrencyCode(String currencyCode) { this.currencyCode = currencyCode; }
 
-    public double getRate() { return rate; }
-    public void setRate(double rate) { this.rate = rate; }
+    public String getCurrencyCode() { return currencyCode; }
+
+    public BigDecimal getRate() { return rate; }
+
+    public void setRate(BigDecimal rate) { this.rate = rate; }
 }

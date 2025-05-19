@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/history")
+@RequestMapping("${api.history-path:/history}")
 public class ExchangeRateHistoryController {
 
     private final ExchangeRateRepository repository;
