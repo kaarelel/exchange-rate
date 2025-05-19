@@ -2,21 +2,23 @@ package com.exchangerate.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+
 public class CurrencyConversionResult {
     @JsonProperty
-    private final double converted;
+    private final BigDecimal converted;
     @JsonProperty
-    private final double rate;
+    private final BigDecimal rate;
     @JsonProperty
     private final String from;
 
-    public CurrencyConversionResult(double converted, double rate, String from) {
+    public CurrencyConversionResult(BigDecimal converted, BigDecimal rate, String from) {
         this.converted = converted;
         this.rate = rate;
         this.from = from;
     }
 
-    public double getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
@@ -24,7 +26,7 @@ public class CurrencyConversionResult {
         return from;
     }
 
-    public double getConverted() {
+    public BigDecimal getConverted() {
         return converted;
     }
 }

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
+import java.math.BigDecimal;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -27,8 +29,10 @@ class CurrencyCalculatorControllerTest {
     @Test
     @DisplayName("Should return converted amount and rate when valid params are given")
     void shouldReturnConversion() throws Exception {
-        Mockito.when(exchangeRateService.convertCurrency(100.0, "EUR", "USD")).thenReturn(114.5);
-        Mockito.when(exchangeRateService.getLatestRate("EUR", "USD")).thenReturn(1.145);
+        Mockito.when(exchangeRateService.convertCurrency(new BigDecimal("100"), "EUR", "USD"))
+                .thenReturn(new BigDecimal("114.5"));
+        Mockito.when(exchangeRateService.getLatestRate("EUR", "USD"))
+                .thenReturn(new BigDecimal("1.145"));
 
         mockMvc.perform(get("/api/calc")
                         .param("amount", "100")
@@ -45,7 +49,7 @@ class CurrencyCalculatorControllerTest {
     @Test
     @DisplayName("Should return bad request when illegal argument thrown")
     void shouldReturnBadRequest() throws Exception {
-        Mockito.when(exchangeRateService.convertCurrency(100.0, "AAA", "USD"))
+        Mockito.when(exchangeRateService.convertCurrency(new BigDecimal("100"), "AAA", "USD"))
                 .thenThrow(new IllegalArgumentException("No data for currency: AAA"));
 
         mockMvc.perform(get("/api/calc")

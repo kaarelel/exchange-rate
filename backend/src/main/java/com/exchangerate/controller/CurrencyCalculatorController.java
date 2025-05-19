@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("${api.base-path:/api}")
 public class CurrencyCalculatorController {
@@ -19,17 +21,17 @@ public class CurrencyCalculatorController {
 
     @GetMapping(value = "${api.calc-path:/calc}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> convert(
-            @RequestParam double amount,
+            @RequestParam BigDecimal amount,
             @RequestParam String from,
             @RequestParam String to
     ) {
         try {
-            double result = exchangeRateService.convertCurrency(amount, from, to);
-            double rate = exchangeRateService.getLatestRate(from, to);
+            BigDecimal result = exchangeRateService.convertCurrency(amount, from, to);
+            BigDecimal rate = exchangeRateService.getLatestRate(from, to);
             CurrencyConversionResult response = new CurrencyConversionResult(result, rate, from);
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(new ErrorResponse(e.getMessage()));
         }
     }
 }
